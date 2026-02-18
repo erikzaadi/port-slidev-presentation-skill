@@ -1,11 +1,12 @@
 <script setup lang="ts">
 defineProps<{
   gap?: 'small' | 'medium' | 'large'
+  inline?: boolean
 }>()
 </script>
 
 <template>
-  <div :class="['stack', gap || 'medium']">
+  <div :class="['stack', gap || 'medium', inline && 'inline']">
     <slot />
   </div>
 </template>
@@ -14,6 +15,10 @@ defineProps<{
 .stack {
   display: flex;
   flex-direction: column;
+}
+
+.stack.inline {
+  align-items: flex-start;
 }
 
 .stack.small {
