@@ -13,6 +13,8 @@ highlighter: shiki
 lineNumbers: true
 transition: fade-out
 exportFilename: port-presentation
+mermaid:
+  theme: neutral
 layout: cover
 ---
 
@@ -156,13 +158,13 @@ Options comparison slide. Good for showing alternatives.
 
 ---
 
-# Image with context
+# AI-suggested playbooks
 
-<Subtitle>Explanation of what the image shows</Subtitle>
+<Subtitle>SRE agent recommends the right action at the right time</Subtitle>
 
 <Space size="large" />
 
-<Placeholder title="Image placeholder" subtitle="Add your image to public/images/" />
+<Image src="/images/ai-suggested-playbooks-sre-agent.png" alt="SRE agent suggesting playbooks" size="large" center />
 
 <!--
 Single image slide. Use Image component for consistent styling.
@@ -170,16 +172,16 @@ Single image slide. Use Image component for consistent styling.
 
 ---
 
-# Two-column with image
+# Human vs AI task split
 
 <Grid cols="2" gap="8">
-  <Placeholder title="Image" subtitle="Add to public/images/" />
+  <Image src="/images/tasks-assignment-human-vs-ai-donut.png" alt="Tasks assignment: AI agents vs humans" />
   <Stack>
-    <FeatureCard icon="✅" title="Pros" color="green">
-      Benefits listed here
+    <FeatureCard icon="🤖" title="AI agents" color="blue">
+      Handle repetitive, well-defined tasks automatically
     </FeatureCard>
-    <FeatureCard icon="⚠️" title="Cons" color="pink">
-      Drawbacks listed here
+    <FeatureCard icon="👤" title="Humans" color="green">
+      Focus on decisions that require context and judgement
     </FeatureCard>
   </Stack>
 </Grid>
@@ -375,11 +377,9 @@ Metrics slide using MetricCard components.
 
 ---
 
-# Data visualization
+# Data breakdown
 
-<Subtitle>Interactive charts with Mermaid</Subtitle>
-
-<Space size="large" />
+<Subtitle>Project time allocation</Subtitle>
 
 ```mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'pie1':'#dbeafe', 'pie2':'#fce7f3', 'pie3':'#dcfce7', 'pie4':'#fef3c7', 'pie5':'#f3e8ff', 'primaryTextColor':'#1f2937', 'pieSectionTextColor':'#1f2937', 'pieTitleTextColor':'#1f2937', 'pieLegendTextColor':'#1f2937'}}}%%
@@ -392,32 +392,103 @@ pie title Project Distribution
 ```
 
 <!--
-Mermaid charts are fully supported in Slidev.
-You can create pie charts, flowcharts, sequence diagrams, and more.
-The theme colors are customized to match Port's palette.
+Pie chart with explicit themeVariables to control colors.
+Adjust pie1-pie5 for slice colors, and text color variables for labels.
 -->
 
 ---
 
-# PowerPoint template assets
+# Improvement over time
 
-<Subtitle>Extracted design elements from Deck template new.pptx</Subtitle>
+<Subtitle>Deployment frequency after platform adoption</Subtitle>
 
-<Grid cols="3" gap="4">
-  <Image src="/images/image1.png" alt="Asset 1" />
-  <Image src="/images/image2.png" alt="Asset 2" />
-  <Image src="/images/image3.png" alt="Asset 3" />
-</Grid>
+```mermaid
+%%{init: {'theme':'base', 'xychart-beta': {'height': 250}, 'themeVariables': { 'xyChart': { 'plotColorPalette': '#3b82f6' }, 'primaryColor':'#3b82f6', 'primaryTextColor':'#1f2937', 'lineColor':'#3b82f6', 'background':'transparent'}}}%%
+xychart-beta
+    title "Deployments per week"
+    x-axis ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
+    y-axis "Deployments" 0 --> 50
+    line [4, 6, 5, 9, 14, 22, 35, 48]
+```
 
-<Grid cols="3" gap="4">
-  <Image src="/images/image4.png" alt="Asset 4" />
-  <Image src="/images/image5.png" alt="Asset 5" />
-  <Image src="/images/image7.png" alt="Asset 7" />
+<!--
+Line chart showing growth/improvement trend.
+Use xychart-beta for bar/line charts. Adjust themeVariables to match your color scheme.
+For Port blue: use #3b82f6. For green: #22c55e. For pink: #ec4899.
+-->
+
+---
+
+# Cover with hero image
+
+<Subtitle>Use the Port 3D hero illustration for visual impact</Subtitle>
+
+<Grid cols="2" gap="8">
+  <Image src="/images/hero-3d-isometric-platform-blocks.jpg" alt="Port hero illustration" size="large" />
+  <Stack>
+    <FeatureCard icon="🎨" title="Port hero image" color="blue">
+      3D platform illustration from the official Port deck template. Use on cover slides or section dividers.
+    </FeatureCard>
+    <FeatureCard icon="📁" title="File location" color="green" size="compact">
+      public/images/hero-3d-isometric-platform-blocks.jpg
+    </FeatureCard>
+  </Stack>
 </Grid>
 
 <!--
-7 images extracted from the PowerPoint template.
-See references/pptx-design-elements.md for color scheme and details.
+hero-3d-isometric-platform-blocks.jpg is the 3D hero asset from the official Port deck template.
+All 80+ Port product screenshots are in themes/port/public/images/ with descriptive names.
+-->
+
+---
+layout: image-right
+image: /images/cicd-pipeline-self-healing-status.png
+---
+
+# Product in action
+
+<Subtitle>CI/CD pipelines with AI self-healing</Subtitle>
+
+<Space size="large" />
+
+<Stack inline>
+  <FeatureCard icon="✨" title="AI self-healing" color="blue" size="compact">
+    Pipelines automatically recover from failures
+  </FeatureCard>
+  <FeatureCard icon="🔗" title="GitHub native" color="green" size="compact">
+    Triggered directly from your existing workflows
+  </FeatureCard>
+  <FeatureCard icon="👥" title="Team visibility" color="purple" size="compact">
+    See who triggered what, and what succeeded
+  </FeatureCard>
+</Stack>
+
+<!--
+image-right layout: image fills the right half, content on the left.
+Use Port product screenshots from public/images/ for realistic demos.
+-->
+
+---
+layout: wide-image
+---
+
+# Port at a glance
+
+<Subtitle>A single platform for your entire engineering org</Subtitle>
+
+<Space size="large" />
+
+<ImpactBox center spacing="small">
+  From context lake to self-service — in one place.
+</ImpactBox>
+
+::right::
+
+<Image src="/images/port-platform-devex-survey-screenshot.png" alt="Port platform screenshot" size="full" />
+
+<!--
+wide-image layout: content on left 40%, image fills right 60%.
+Good for product screenshots where detail matters.
 -->
 
 ---
@@ -466,6 +537,167 @@ Step-by-step process using StepItem components.
 
 <!--
 Takeaways slide with tags at the bottom.
+-->
+
+---
+layout: section
+---
+
+# Available images
+
+<Subtitle>Port product screenshots</Subtitle>
+
+<Note>Reference as /images/[name] in Image components</Note>
+
+<!--
+Image catalogue section. The slides below list all available images from themes/port/public/images/.
+Delete these slides before presenting — they are for reference only.
+-->
+
+---
+
+# Image catalogue: product UI
+
+<Grid cols="3" gap="4">
+  <FeatureCard icon="🖥️" title="cicd-pipeline-self-healing-status.png" color="blue" size="small">
+    CI/CD pipeline list with self-healing AI status
+  </FeatureCard>
+  <FeatureCard icon="📊" title="deployments-risk-strategy-table.png" color="green" size="small">
+    Deployments table with risk level and rollout strategy
+  </FeatureCard>
+  <FeatureCard icon="🍩" title="tasks-assignment-human-vs-ai-donut.png" color="pink" size="small">
+    Tasks assignment donut chart: human vs AI agents
+  </FeatureCard>
+  <FeatureCard icon="🤖" title="ai-suggested-playbooks-sre-agent.png" color="purple" size="small">
+    SRE agent suggested playbooks with Run buttons
+  </FeatureCard>
+  <FeatureCard icon="📋" title="port-platform-devex-survey-screenshot.png" color="yellow" size="small">
+    Full Port portal: DevEx survey page
+  </FeatureCard>
+  <FeatureCard icon="🔧" title="self-service-actions-grid-mcp.png" color="blue" size="small">
+    Self-service actions grid with MCP availability
+  </FeatureCard>
+</Grid>
+
+<!--
+Catalogue slide 1: core product UI screenshots.
+-->
+
+---
+
+# Image catalogue: AI and agents
+
+<Grid cols="3" gap="4">
+  <FeatureCard icon="💬" title="ai-chat-create-s3-bucket.png" color="blue" size="small">
+    AI chat modal: Create an S3 Bucket with Agent mode
+  </FeatureCard>
+  <FeatureCard icon="🔍" title="ai-rca-incident-report-card.png" color="pink" size="small">
+    RCA card: root cause analysis for latency incident
+  </FeatureCard>
+  <FeatureCard icon="⏪" title="ai-revert-last-version-approval.png" color="green" size="small">
+    AI action card: Revert last version with Approve/Decline
+  </FeatureCard>
+  <FeatureCard icon="🔗" title="ai-suggested-connections-confidence.png" color="purple" size="small">
+    Suggested connections with confidence scores
+  </FeatureCard>
+  <FeatureCard icon="🛡️" title="ai-agent-security-prompt-mission.png" color="yellow" size="small">
+    AI agent Prompt card: mission and constraints
+  </FeatureCard>
+  <FeatureCard icon="⚙️" title="sre-agent-config-accessible-data.png" color="blue" size="small">
+    SRE agent config: accessible data and allowed actions
+  </FeatureCard>
+</Grid>
+
+<!--
+Catalogue slide 2: AI interactions and agent configuration.
+-->
+
+---
+
+# Image catalogue: metrics and charts
+
+<Grid cols="3" gap="4">
+  <FeatureCard icon="📈" title="incidents-solved-by-agents-line-chart.png" color="blue" size="small">
+    Line chart: incidents solved by agents trending up
+  </FeatureCard>
+  <FeatureCard icon="📉" title="ticket-lead-time-trend-line-chart.png" color="green" size="small">
+    Line chart: ticket lead time declining Jan–May
+  </FeatureCard>
+  <FeatureCard icon="📊" title="scorecards-progress-line-chart.png" color="pink" size="small">
+    Multi-line chart: scorecard progress over time
+  </FeatureCard>
+  <FeatureCard icon="⚡" title="agent-vs-eng-ticket-time-bar-chart.png" color="purple" size="small">
+    Bar chart: agent (0.2 days) vs engineer (3.7 days) per ticket
+  </FeatureCard>
+  <FeatureCard icon="🔢" title="ai-pr-throughput-merge-rate-dashboard.png" color="yellow" size="small">
+    Dashboard: AI PR throughput, merge rate, escalation rate
+  </FeatureCard>
+  <FeatureCard icon="🏆" title="developer-productivity-driver-scores.png" color="blue" size="small">
+    Driver vs score table: ease to release, deep work, etc.
+  </FeatureCard>
+</Grid>
+
+<!--
+Catalogue slide 3: metrics, KPIs, and data visualisation screenshots.
+-->
+
+---
+
+# Image catalogue: governance and access
+
+<Grid cols="3" gap="4">
+  <FeatureCard icon="🗺️" title="service-catalog-entity-relations-map.png" color="blue" size="small">
+    Entity relationship diagram: teams → services → deployments
+  </FeatureCard>
+  <FeatureCard icon="📜" title="new-scorecard-bronze-silver-gold-rules.png" color="green" size="small">
+    New scorecard wizard: Bronze/Silver/Gold rules
+  </FeatureCard>
+  <FeatureCard icon="🔐" title="data-access-permission-services-policy.png" color="pink" size="small">
+    Data access permission panel with policy JSON editor
+  </FeatureCard>
+  <FeatureCard icon="👥" title="action-permissions-teams-users-agents.png" color="purple" size="small">
+    Action permissions: teams, users, agents, manual approval
+  </FeatureCard>
+  <FeatureCard icon="🔑" title="new-policy-condition-builder.png" color="yellow" size="small">
+    New Policy modal: condition builder with Where/Or clauses
+  </FeatureCard>
+  <FeatureCard icon="🎨" title="portal-branding-organisation-setup.png" color="blue" size="small">
+    Portal branding setup: org name, logo, theme color
+  </FeatureCard>
+</Grid>
+
+<!--
+Catalogue slide 4: governance, permissions, and platform configuration.
+-->
+
+---
+
+# Image catalogue: 3D icons and hero assets
+
+<Grid cols="3" gap="4">
+  <FeatureCard icon="🏗️" title="hero-3d-isometric-platform-blocks.jpg" color="blue" size="small">
+    Port 3D hero: isometric platform blocks with icons — use on cover slides
+  </FeatureCard>
+  <FeatureCard icon="🐙" title="3d-icon-github-gitlab-integrations.png" color="green" size="small">
+    3D icons: GitHub Octocat and GitLab fox on pedestals
+  </FeatureCard>
+  <FeatureCard icon="🤖" title="3d-icon-claude-action-integration.png" color="pink" size="small">
+    3D icons: Claude starburst, lightning bolt, action arrow
+  </FeatureCard>
+  <FeatureCard icon="🔗" title="agents-context-lake-diagram.png" color="purple" size="small">
+    Agents diagram: 5 AI providers connected to Port context lake
+  </FeatureCard>
+  <FeatureCard icon="✨" title="ai-provider-logos-row.png" color="yellow" size="small">
+    Row of 5 AI provider logos: Claude, OpenAI, Azure AI, Gemini
+  </FeatureCard>
+  <FeatureCard icon="🏙️" title="port-billboard-logo-outdoor.jpg" color="blue" size="small">
+    Outdoor billboard photograph with Port logo
+  </FeatureCard>
+</Grid>
+
+<!--
+Catalogue slide 5: 3D icon assets and hero images for cover slides and section dividers.
+Full list of all available images is in themes/port/public/images/.
 -->
 
 ---

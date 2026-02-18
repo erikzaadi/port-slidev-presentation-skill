@@ -20,10 +20,14 @@ Gather before starting:
 
 ### 1. Set up the presentation with Port theme
 
-Create the presentation folder and set up the theme:
+Create the presentation folder, set up the theme, and symlink the image library:
 
 ```bash
-mkdir -p outputs/presentations/[name]
+mkdir -p outputs/presentations/[name]/public/images
+
+# Symlink all theme images into the presentation's public folder
+ln -s "$(pwd)/.claude/skills/slidev-presentation/themes/port/public/images/"* \
+  outputs/presentations/[name]/public/images/
 ```
 
 Create `slides.md` with this frontmatter (adjust the relative path based on location):
@@ -39,8 +43,17 @@ The Port theme provides:
 - Pre-styled layouts (cover, section, default)
 - Reusable components (Grid, FeatureCard, MetricCard, Tag, StepItem, ImpactBox, etc.)
 - Consistent brand colors and typography
+- 80+ Port product screenshots in `themes/port/public/images/` — symlink them as above
 
 **See:** [themes/port/README.md](themes/port/README.md) for full component documentation.
+
+**Available images:** All images are in `themes/port/public/images/` with descriptive kebab-case names. Reference them in slides as `<Image src="/images/[name]" />`. Key images:
+- `hero-3d-isometric-platform-blocks.jpg` — 3D Port hero, use on cover slides
+- `cicd-pipeline-self-healing-status.png` — CI/CD pipeline with AI self-healing
+- `tasks-assignment-human-vs-ai-donut.png` — Human vs AI task split donut chart
+- `ai-suggested-playbooks-sre-agent.png` — SRE agent playbook suggestions
+- `agents-context-lake-diagram.png` — AI providers connected to context lake
+- See `templates/port-template.md` image catalogue slides for the full list
 
 ### 2. Use template components (not custom CSS)
 
@@ -121,12 +134,14 @@ Add `layout` frontmatter per slide:
 
 | Layout | Purpose |
 |--------|---------|
-| `cover` | Title slide |
-| `default` | Standard content |
-| `two-cols` | Two columns |
-| `image-right` | Image on right side |
+| `cover` | Title/intro slide with large heading |
+| `default` | Standard content slide |
+| `section` | Section divider between topics |
+| `two-cols` | Two equal columns |
+| `image-right` | Content on left, image on right |
+| `image-left` | Content on right, image on left |
+| `wide-image` | Full-bleed image with content overlay (Port theme) |
 | `center` | Centered content |
-| `section` | Section divider |
 
 Two-column example:
 
@@ -166,14 +181,14 @@ def another():
 
 Slidev has built-in support for Mermaid diagrams. Use them for data visualization, flowcharts, and process diagrams.
 
-**Pie charts:**
+Always use `%%{init: ...}%%` to set explicit colors — Mermaid bakes these into the SVG at render time, so they work consistently across light and dark mode without any CSS overrides.
+
+**Pie chart example:**
 
 ```markdown
 # Data breakdown
 
 <Subtitle>Project time allocation</Subtitle>
-
-<Space size="large" />
 
 \`\`\`mermaid
 %%{init: {'theme':'base', 'themeVariables': { 'pie1':'#dbeafe', 'pie2':'#fce7f3', 'pie3':'#dcfce7', 'pie4':'#fef3c7', 'pie5':'#f3e8ff', 'primaryTextColor':'#1f2937', 'pieSectionTextColor':'#1f2937', 'pieTitleTextColor':'#1f2937', 'pieLegendTextColor':'#1f2937'}}}%%
@@ -186,7 +201,31 @@ pie title Project Distribution
 \`\`\`
 ```
 
-**Dark mode:** The theme includes CSS overrides that automatically adjust title and legend colors for dark mode while keeping slice text readable on pastel backgrounds.
+**Line chart (improvement over time):**
+
+```markdown
+# Improvement over time
+
+<Subtitle>Deployment frequency after platform adoption</Subtitle>
+
+\`\`\`mermaid
+%%{init: {'theme':'base', 'xychart-beta': {'height': 250}, 'themeVariables': { 'primaryColor':'#3b82f6', 'primaryTextColor':'#1f2937', 'lineColor':'#3b82f6', 'background':'transparent'}}}%%
+xychart-beta
+    title "Deployments per week"
+    x-axis ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
+    y-axis "Deployments" 0 --> 50
+    line [4, 6, 5, 9, 14, 22, 35, 48]
+\`\`\`
+
+**Note:** Always set `'xychart-beta': {'height': 250}` in the init block. Mermaid renders xychart inside a Shadow DOM so CSS cannot control the size — explicit height in the config is the only reliable way.
+```
+
+**Port color palette for themeVariables:**
+- Blue: `#3b82f6` / light: `#dbeafe`
+- Pink: `#ec4899` / light: `#fce7f3`
+- Green: `#22c55e` / light: `#dcfce7`
+- Yellow: `#eab308` / light: `#fef3c7`
+- Purple: `#a855f7` / light: `#f3e8ff`
 
 **Other Mermaid diagram types:**
 - Flowcharts: `graph TD` or `graph LR`
@@ -194,8 +233,6 @@ pie title Project Distribution
 - Gantt charts: `gantt`
 - Class diagrams: `classDiagram`
 - State diagrams: `stateDiagram-v2`
-
-**Tip:** Customize Mermaid theme colors to match Port's palette using the `themeVariables` configuration shown above.
 
 ### 6. Add speaker notes
 
@@ -258,9 +295,12 @@ outputs/presentations/[name]/
 ├── [name].pdf         # Exported PDF
 ├── public/            # Images and assets
 │   └── images/
-│       └── port-logo.svg
+│       ├── → (symlinks to themes/port/public/images/*)
+│       └── custom-screenshot.png   # Presentation-specific images
 └── components/        # Custom Vue components (optional)
 ```
+
+Images in `themes/port/public/images/` are available to all presentations via symlinks. Only add presentation-specific images directly to `public/images/`.
 
 ## Multi-slide editing
 
@@ -281,13 +321,41 @@ Task(subagent_type="general-purpose", prompt="Edit slide X in [file] to [specifi
 - Describe the exact change: what element, what property, what value
 - Reference line numbers or slide numbers for clarity
 
+## Port brand guidelines
+
+These rules come from the official Port deck template:
+
+**Design:**
+- Use 1 clear image per slide
+- Font: DM Sans only — never switch to other fonts
+- Avoid complex charts — keep data simple and readable
+- Avoid using bold style and exclamation marks
+- Use capital letters only at the beginning of a sentence or a name
+
+**Writing:**
+- Keep texts short and crisp
+- No marketing speak or inflated language
+- Text is specific, not generic
+- Descriptions are down-to-earth
+
+**Presentation:**
+- Transition: use `fade-out` (the Slidev equivalent of "Dissolved") — already set in the template frontmatter
+- Present in slideshow/fullscreen mode
+- Stay in 1-3 consistent layouts per deck — adapt content to the layout, not the other way around
+
 ## Quality checklist
 
 **Structure:**
 - [ ] One main idea per slide
 - [ ] Port brand colors applied
-- [ ] Consistent layout usage throughout
+- [ ] Consistent layout usage throughout (1-3 layouts max)
 - [ ] No walls of text (max 5-7 bullet points)
+
+**Brand:**
+- [ ] DM Sans font (set in frontmatter — do not override)
+- [ ] No bold text or exclamation marks
+- [ ] Capital letters only at sentence start or proper names
+- [ ] 1 image per slide maximum
 
 **Layout:**
 - [ ] No panel overflow (see [troubleshooting guide](references/layout-troubleshooting.md))
@@ -296,7 +364,6 @@ Task(subagent_type="general-purpose", prompt="Edit slide X in [file] to [specifi
 
 **Content:**
 - [ ] Text is specific, not generic
-- [ ] Descriptions are down-to-earth
 - [ ] No marketing speak or inflated language
 - [ ] Follow writing guidelines for all text
 

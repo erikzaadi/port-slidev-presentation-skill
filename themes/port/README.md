@@ -22,6 +22,11 @@ Adjust the relative path based on your presentation's location.
 | `cover` | - | Title slide with centered content |
 | `section` | `number` | Section divider with optional big number |
 | `default` | - | Standard content slide |
+| `wide-image` | - | 40% content left / 60% full-bleed image right (use `::right` slot for image) |
+| `image-right` | `image` | Slidev built-in: content left, image right |
+| `image-left` | `image` | Slidev built-in: image left, content right |
+| `two-cols` | - | Slidev built-in: two equal columns (use `::right` slot) |
+| `center` | - | Slidev built-in: vertically and horizontally centered content |
 
 ### Section layout example
 
@@ -34,6 +39,22 @@ number: "01"
 # Section title
 
 <Subtitle>Optional subtitle</Subtitle>
+```
+
+### Wide-image layout example
+
+```markdown
+---
+layout: wide-image
+---
+
+# Slide title
+
+<Subtitle>Context here</Subtitle>
+
+::right::
+
+<img src="/images/hero-3d-isometric-platform-blocks.jpg" />
 ```
 
 ## Components
@@ -80,10 +101,16 @@ Vertical stack layout for grouping elements.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `gap` | String | "medium" | "small", "medium", "large" |
+| `inline` | Boolean | false | Shrink items to natural width (sets `align-items: flex-start`) |
 
 ```html
 <Stack gap="small">
   <FeatureCard ... />
+  <FeatureCard ... />
+</Stack>
+
+<!-- Cards shrink to content width instead of stretching full column -->
+<Stack inline>
   <FeatureCard ... />
 </Stack>
 ```
@@ -125,7 +152,7 @@ Colored card with icon, title, and description. Supports optional tags.
 | `title` | String | Required | Card title |
 | `color` | String | "blue" | blue, pink, green, purple, yellow, orange |
 | `variant` | String | "default" | "default" or "pillar" (centered, white bg) |
-| `size` | String | "default" | "default" or "compact" (smaller, horizontal layout) |
+| `size` | String | "default" | "default", "compact" (horizontal layout), or "small" (compact vertical, no min-height) |
 
 ```html
 <Grid cols="3">
@@ -406,6 +433,35 @@ Individual item on a Timeline. Must be used inside a Timeline component.
   Feature development
 </TimelineItem>
 ```
+
+## Image library
+
+80+ Port product screenshots are available in `themes/port/public/images/` with descriptive kebab-case names. Symlink them into your presentation's `public/images/` folder:
+
+```bash
+ln -s "$(pwd)/themes/port/public/images/"* your-presentation/public/images/
+```
+
+Then reference in slides as:
+
+```html
+<Image src="/images/cicd-pipeline-self-healing-status.png" alt="CI/CD pipelines" />
+```
+
+Key images:
+
+| Filename | Description |
+|----------|-------------|
+| `hero-3d-isometric-platform-blocks.jpg` | 3D Port hero — use on cover slides |
+| `cicd-pipeline-self-healing-status.png` | CI/CD pipeline list with AI self-healing |
+| `tasks-assignment-human-vs-ai-donut.png` | Human vs AI task split donut chart |
+| `ai-suggested-playbooks-sre-agent.png` | SRE agent playbook suggestions |
+| `agents-context-lake-diagram.png` | AI providers connected to context lake |
+| `agent-vs-eng-ticket-time-bar-chart.png` | Agent vs engineer ticket time comparison |
+| `scorecards-progress-line-chart.png` | Scorecard progress over time |
+| `service-catalog-entity-relations-map.png` | Entity relationship diagram |
+
+See the image catalogue slides in `templates/port-template.md` for the full list with descriptions.
 
 ## Brand colors
 

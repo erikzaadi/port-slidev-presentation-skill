@@ -56,21 +56,44 @@ npx @slidev/cli slides.md
 | `cover` | Title slides with logo and decorative dots |
 | `section` | Section dividers with optional big number |
 | `default` | Standard content slides |
-| `two-cols` | Two-column layout |
-| `center` | Centered content |
-| `statement` | Bold statement slides |
+| `wide-image` | 40% content / 60% full-bleed image (use `::right` slot) |
+| `image-right` | Content left, image right (Slidev built-in) |
+| `image-left` | Image left, content right (Slidev built-in) |
+| `two-cols` | Two equal columns (Slidev built-in) |
+| `center` | Centered content (Slidev built-in) |
 
 ### Components
 
 Pre-built Vue components for consistent styling:
 
-- **MetricCard** - Display stats with labels
-- **FeatureCard** - Feature highlights with icons
-- **Tag** - Colored category pills (blue, pink, green, yellow, purple)
-- **ImpactBox** - Black boxes for key outcomes
 - **Grid** - Responsive grid layouts
-- **StepNumber** - Numbered step indicators
+- **Stack** - Vertical stack with gap control and `inline` prop
+- **FeatureCard** - Feature highlights with icon, title, description (`default`, `compact`, `small`)
+- **MetricCard** - Display stats with large number and label
+- **Tag** - Colored category pills (blue, pink, green, yellow, purple, orange)
+- **ImpactBox** - Black boxes for key outcomes
+- **StepItem** - Numbered steps for process slides
+- **AgendaItem** - Colored boxes for agenda slides
 - **ChartCard** - White card wrapper to keep Mermaid charts readable on dark backgrounds
+- **Timeline / TimelineItem** - Horizontal roadmap with quarter markers
+- **Subtitle** - Muted text below headings
+- **Note** - Italic muted text for caveats
+- **Paragraph** - Body text with spacing control
+- **Highlight** - Centered emphasis text
+- **Space** - Explicit vertical spacing
+- **ColorDots** - Decorative element for cover slides
+- **PortLogo** - Port brand logo (SVG or PNG, black or white)
+- **Placeholder** - Placeholder for media not yet available
+
+### Image library
+
+80+ Port product screenshots in `themes/port/public/images/` with descriptive names. Symlink into your presentation:
+
+```bash
+ln -s "$(pwd)/themes/port/public/images/"* your-presentation/public/images/
+```
+
+Key images: `hero-3d-isometric-platform-blocks.jpg`, `cicd-pipeline-self-healing-status.png`, `agents-context-lake-diagram.png`, and many more. See the image catalogue slides in `templates/port-template.md`.
 
 ### Mermaid charts
 
@@ -86,12 +109,7 @@ Mermaid diagrams are supported out of the box. Charts are automatically constrai
 | Muted text | `#4b5563` |
 | Border | `#e5e7eb` |
 
-Tag colors (pastel):
-- Blue: `#dbeafe`
-- Pink: `#fce7f3`
-- Green: `#dcfce7`
-- Yellow: `#fef3c7`
-- Purple: `#f3e8ff`
+Tag colors (pastel): blue `#dbeafe`, pink `#fce7f3`, green `#dcfce7`, yellow `#fef3c7`, purple `#f3e8ff`, orange `#ffedd5`
 
 ## Usage with Slidev
 
@@ -126,67 +144,23 @@ npx @slidev/cli export slides.md --format png
 
 ## Template slide types
 
-The template includes 17 slide variations:
+`templates/port-template.md` includes a wide range of slide patterns:
 
-**Title slides:**
-1. Cover with gradient accent
-2. Big statement (dark variant)
-3. Section divider with number
-4. Section divider (gradient background)
+- Cover, section divider, closing slide
+- Metrics grid, stat cards, KPI layouts
+- Feature cards (2-col, 3-col, pillar variants)
+- Agenda, timeline/roadmap, before/after
+- Mermaid charts (pie, xychart)
+- Image slides (`image-right`, `wide-image` layouts)
+- Image catalogue (reference slides listing all available assets)
 
-**Content slides:**
-5. Icon grid (4 columns)
-6. Quote slide
-7. Big number reveal
-8. Three pillars (aligned cards)
-9. Before/After comparison
-10. Stats grid with progress bars
-11. Case study slide
-12. Key takeaways
+## Brand guidelines
 
-**Board-style slides:**
-13. Metrics with chart placeholder
-14. Two-column categories with avatars
-15. Split metrics grid
-16. Big centered statement
-17. Timeline roadmap
-- Mermaid charts (pie, xychart line)
-
-## Customization
-
-### Brand colors
-
-Edit the CSS variables in your slides:
-
-```css
-:root {
-  --port-bg: #f8f9fa;      /* Your background */
-  --port-card: #ffffff;     /* Card backgrounds */
-  --port-black: #000000;    /* Primary text */
-  --port-muted: #4b5563;    /* Secondary text */
-}
-```
-
-### Fonts
-
-Change fonts in frontmatter:
-
-```yaml
----
-fonts:
-  sans: Inter           # or your preferred font
-  mono: Fira Code
-  weights: '400,500,600,700'
----
-```
-
-### Add your logo
-
-Place your logo in `public/images/` and update references:
-
-```html
-<img src="/images/your-logo.png" class="h-8" />
-```
+- **Font**: DM Sans only — do not change
+- **One image per slide** maximum
+- Sentence case for all headings — no ALL CAPS
+- No bold or exclamation marks in body text
+- Use `fade` slide transition
 
 ## Narrative framework
 
@@ -223,20 +197,19 @@ slidev-presentation/
 ├── SKILL.md                    # Claude Code skill definition
 ├── README.md                   # This file
 ├── templates/
-│   ├── port-template.md        # Full slide template (17 variations)
-│   └── images/
-│       └── port-logo.png
+│   ├── port-template.md        # Full slide template with all patterns
+│   └── public/images/          # Symlinks → themes/port/public/images/
 ├── themes/
 │   └── port/                   # Custom Slidev theme
 │       ├── package.json
 │       ├── styles/
-│       ├── layouts/
-│       └── components/
+│       ├── layouts/            # cover, section, default, wide-image
+│       ├── components/         # All Vue components
+│       └── public/images/      # 80+ Port product screenshots
 └── references/
-    ├── export-guide.md         # PDF/PNG export options
+    ├── export-guide.md
     ├── layout-troubleshooting.md
-    ├── narrative-framework.md
-    └── port-theme.md           # Brand guidelines
+    └── narrative-framework.md
 ```
 
 ## License
