@@ -70,6 +70,11 @@ Pre-built Vue components for consistent styling:
 - **ImpactBox** - Black boxes for key outcomes
 - **Grid** - Responsive grid layouts
 - **StepNumber** - Numbered step indicators
+- **ChartCard** - White card wrapper to keep Mermaid charts readable on dark backgrounds
+
+### Mermaid charts
+
+Mermaid diagrams are supported out of the box. Charts are automatically constrained to prevent overflow. Use `themeVariables` to set colors reliably (they are baked into the SVG at render time).
 
 ### Color palette
 
@@ -145,6 +150,7 @@ The template includes 17 slide variations:
 15. Split metrics grid
 16. Big centered statement
 17. Timeline roadmap
+- Mermaid charts (pie, xychart line)
 
 ## Customization
 

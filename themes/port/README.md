@@ -138,6 +138,50 @@ Colored card with icon, title, and description. Supports optional tags.
 </Grid>
 ```
 
+### ChartCard
+
+White card wrapper that ensures Mermaid charts are always readable regardless of slide background color. Mermaid bakes text colors into SVG inline styles at render time, so this card provides a consistent light background.
+
+```html
+<ChartCard>
+
+```mermaid
+pie title Breakdown
+  "Category A" : 60
+  "Category B" : 40
+```
+
+</ChartCard>
+```
+
+### Mermaid charts
+
+Use bare Mermaid syntax directly in slides (no wrapper needed for most cases). Mermaid SVGs are automatically constrained to `max-height: 30vh` via shadow DOM JS injection in the default layout, preventing overflow on content-heavy slides.
+
+Use `themeVariables` to set colors explicitly (they are baked into SVG at render time):
+
+````markdown
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#dbeafe", "primaryTextColor": "#1f2937", "primaryBorderColor": "#93c5fd"}}}%%
+pie title Support tickets
+  "Resolved by AI" : 78
+  "Escalated to human" : 22
+```
+````
+
+For xychart, use `height` in config to control size (key is `xychart-beta`):
+
+````markdown
+```mermaid
+%%{init: {"xychart-beta": {"height": 250}, "themeVariables": {"xyChart": {"backgroundColor": "#ffffff"}}}}%%
+xychart-beta
+  title "Trend"
+  x-axis [Jan, Feb, Mar]
+  y-axis 0 --> 100
+  line [30, 60, 90]
+```
+````
+
 ### StepItem
 
 Numbered step with title and description. Use in a Grid for aligned steps.

@@ -162,7 +162,42 @@ def another():
 ```
 ```
 
-### 5. Add speaker notes
+### 5. Add charts and diagrams with Mermaid
+
+Slidev has built-in support for Mermaid diagrams. Use them for data visualization, flowcharts, and process diagrams.
+
+**Pie charts:**
+
+```markdown
+# Data breakdown
+
+<Subtitle>Project time allocation</Subtitle>
+
+<Space size="large" />
+
+\`\`\`mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'pie1':'#dbeafe', 'pie2':'#fce7f3', 'pie3':'#dcfce7', 'pie4':'#fef3c7', 'pie5':'#f3e8ff', 'primaryTextColor':'#1f2937', 'pieSectionTextColor':'#1f2937', 'pieTitleTextColor':'#1f2937', 'pieLegendTextColor':'#1f2937'}}}%%
+pie title Project Distribution
+    "Development" : 35
+    "Testing" : 20
+    "Documentation" : 15
+    "Deployment" : 20
+    "Maintenance" : 10
+\`\`\`
+```
+
+**Dark mode:** The theme includes CSS overrides that automatically adjust title and legend colors for dark mode while keeping slice text readable on pastel backgrounds.
+
+**Other Mermaid diagram types:**
+- Flowcharts: `graph TD` or `graph LR`
+- Sequence diagrams: `sequenceDiagram`
+- Gantt charts: `gantt`
+- Class diagrams: `classDiagram`
+- State diagrams: `stateDiagram-v2`
+
+**Tip:** Customize Mermaid theme colors to match Port's palette using the `themeVariables` configuration shown above.
+
+### 6. Add speaker notes
 
 Include notes below each slide using HTML comment:
 
@@ -177,7 +212,7 @@ Only visible in presenter mode.
 -->
 ```
 
-### 6. Preview and export
+### 7. Preview and export
 
 When the user asks to "run" the presentation:
 

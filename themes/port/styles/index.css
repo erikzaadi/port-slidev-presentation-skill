@@ -579,3 +579,18 @@ tbody tr:hover {
 .dark tbody tr:hover {
   background: var(--port-card);
 }
+
+/* ==============================================
+   Mermaid Charts
+   ============================================== */
+
+/* All Mermaid text defaults to light in dark mode */
+.dark .mermaid text {
+  fill: #f9fafb !important;
+}
+
+/* But slice percentages stay dark on light pastel backgrounds */
+.mermaid .slice text,
+.dark .mermaid .slice text {
+  fill: #1f2937 !important;
+}

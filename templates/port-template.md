@@ -375,6 +375,53 @@ Metrics slide using MetricCard components.
 
 ---
 
+# Data visualization
+
+<Subtitle>Interactive charts with Mermaid</Subtitle>
+
+<Space size="large" />
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'pie1':'#dbeafe', 'pie2':'#fce7f3', 'pie3':'#dcfce7', 'pie4':'#fef3c7', 'pie5':'#f3e8ff', 'primaryTextColor':'#1f2937', 'pieSectionTextColor':'#1f2937', 'pieTitleTextColor':'#1f2937', 'pieLegendTextColor':'#1f2937'}}}%%
+pie title Project Distribution
+    "Development" : 35
+    "Testing" : 20
+    "Documentation" : 15
+    "Deployment" : 20
+    "Maintenance" : 10
+```
+
+<!--
+Mermaid charts are fully supported in Slidev.
+You can create pie charts, flowcharts, sequence diagrams, and more.
+The theme colors are customized to match Port's palette.
+-->
+
+---
+
+# PowerPoint template assets
+
+<Subtitle>Extracted design elements from Deck template new.pptx</Subtitle>
+
+<Grid cols="3" gap="4">
+  <Image src="/images/image1.png" alt="Asset 1" />
+  <Image src="/images/image2.png" alt="Asset 2" />
+  <Image src="/images/image3.png" alt="Asset 3" />
+</Grid>
+
+<Grid cols="3" gap="4">
+  <Image src="/images/image4.png" alt="Asset 4" />
+  <Image src="/images/image5.png" alt="Asset 5" />
+  <Image src="/images/image7.png" alt="Asset 7" />
+</Grid>
+
+<!--
+7 images extracted from the PowerPoint template.
+See references/pptx-design-elements.md for color scheme and details.
+-->
+
+---
+
 # Three steps
 
 <Grid cols="3">
