@@ -31,10 +31,10 @@ defineProps({
   margin-top: 0;
 }
 
-/* Dark mode */
+/* Dark mode - white box for contrast against dark slides */
 .dark .impact-box {
-  background: #1a1a2e;
-  color: #f9fafb;
-  border: 1px solid #374151;
+  background: #ffffff;
+  color: #111827;
+  border: none;
 }
 </style>

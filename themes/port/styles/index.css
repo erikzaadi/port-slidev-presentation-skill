@@ -262,9 +262,9 @@ html.dark p {
 }
 
 .dark .impact-box {
-  background: var(--port-card);
-  color: var(--port-black);
-  border: 1px solid var(--port-border);
+  background: #ffffff;
+  color: #111827;
+  border: none;
 }
 
 .success-box {
