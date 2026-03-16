@@ -31,8 +31,11 @@ defineProps({
   margin-top: 0;
 }
 
-/* Dark mode - white box for contrast against dark slides */
-.dark .impact-box {
+</style>
+
+<style>
+/* Dark mode - unscoped so html.dark selector works */
+html.dark .impact-box {
   background: #ffffff;
   color: #111827;
   border: none;

@@ -84,6 +84,7 @@ defineProps({
 .feature-purple { background: #f3e8ff; }
 .feature-yellow { background: #fef3c7; }
 .feature-orange { background: #ffedd5; }
+.feature-gray { background: #f3f4f6; }
 
 .feature-icon {
   font-size: 2rem;
@@ -130,36 +131,49 @@ defineProps({
   color: #6b7280;
 }
 
-/* Dark mode */
-.dark .feature-title {
+</style>
+
+<style>
+/* Dark mode - unscoped so html.dark selector works */
+html.dark .feature-title {
   color: #f9fafb;
 }
 
-.dark .feature-desc {
+html.dark .feature-desc,
+html.dark .feature-desc p {
   color: #d1d5db;
 }
 
-.dark .feature-card.pillar {
+html.dark .feature-card.pillar {
   background: #1a1a2e;
   border: 1px solid #374151;
 }
 
 /* Keep dark text on pastel backgrounds in dark mode */
-.dark .feature-blue .feature-title,
-.dark .feature-pink .feature-title,
-.dark .feature-green .feature-title,
-.dark .feature-purple .feature-title,
-.dark .feature-yellow .feature-title,
-.dark .feature-orange .feature-title {
+html.dark .feature-blue .feature-title,
+html.dark .feature-pink .feature-title,
+html.dark .feature-green .feature-title,
+html.dark .feature-purple .feature-title,
+html.dark .feature-yellow .feature-title,
+html.dark .feature-orange .feature-title,
+html.dark .feature-gray .feature-title {
   color: #1f2937;
 }
 
-.dark .feature-blue .feature-desc,
-.dark .feature-pink .feature-desc,
-.dark .feature-green .feature-desc,
-.dark .feature-purple .feature-desc,
-.dark .feature-yellow .feature-desc,
-.dark .feature-orange .feature-desc {
+html.dark .feature-blue .feature-desc,
+html.dark .feature-pink .feature-desc,
+html.dark .feature-green .feature-desc,
+html.dark .feature-purple .feature-desc,
+html.dark .feature-yellow .feature-desc,
+html.dark .feature-orange .feature-desc,
+html.dark .feature-gray .feature-desc,
+html.dark .feature-blue .feature-desc p,
+html.dark .feature-pink .feature-desc p,
+html.dark .feature-green .feature-desc p,
+html.dark .feature-purple .feature-desc p,
+html.dark .feature-yellow .feature-desc p,
+html.dark .feature-orange .feature-desc p,
+html.dark .feature-gray .feature-desc p {
   color: #4b5563;
 }
 </style>
