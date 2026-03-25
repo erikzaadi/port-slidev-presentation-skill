@@ -1,7 +1,7 @@
 <template>
   <div class="slidev-layout section h-full flex items-center justify-center px-12">
     <div class="flex items-center gap-12">
-      <div class="section-number">{{ $slidev.configs.number || '01' }}</div>
+      <div class="section-number">{{ $frontmatter.number || '01' }}</div>
       <div class="section-content">
         <slot />
       </div>

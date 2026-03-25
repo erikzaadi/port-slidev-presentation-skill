@@ -7,14 +7,36 @@ description: Create, run, and export Markdown-based presentations using Slidev. 
 
 Create Markdown-based presentations using Slidev with live preview, syntax highlighting, and export capabilities.
 
-## Required information
+## Workflow order
 
-Gather before starting:
-- Presentation topic/title
-- Target audience
-- Key points (3-7 main ideas)
-- Code examples needed (yes/no)
-- Brand style: **Port branded** (default) or generic
+**Don't ask before starting. Build first, refine after.**
+
+1. Extract topic, audience, and key points from the user's prompt — make reasonable assumptions
+2. Create `slides.md` immediately (8–12 slides, Port theme, pick images from the list in step 1)
+3. Run the dev server and give the user the localhost URL
+4. **Only after the server is running**, ask clarifying questions:
+   - Who is the audience?
+   - Are there specific points or data you want emphasized?
+   - Any sections to add, remove, or reorder?
+
+Questions are more productive when the user is looking at a live draft — feedback becomes concrete instead of abstract.
+
+**Default assumptions when not specified:**
+- Brand style: Port branded
+- Slide count: 8–12
+- Code examples: only if topic warrants it
+- Tone: professional, direct, no marketing speak
+
+## Bootstrap (first time only)
+
+If this skill is being invoked via Port MCP rather than from a local `.claude/skills/` 
+installation, clone it first:
+```bash
+git clone https://github.com/port-labs/port-slidev-presentation-skill.git \
+  .claude/skills/slidev-presentation
+```
+
+Then re-read this file from the local path before proceeding.
 
 ## Process
 
@@ -251,11 +273,12 @@ Only visible in presenter mode.
 
 ### 7. Preview and export
 
-When the user asks to "run" the presentation:
+After creating `slides.md`, **always launch the dev server immediately** — don't wait for the user to ask.
 
 1. **Verify the slides compile** by running Slidev once to check for errors
 2. **Provide the terminal command** for the user to run themselves (don't run it in background)
 3. **Always use a random port** (e.g., 3031-3099) since port 3030 is often occupied when working with multiple presentations
+4. **Once you've given the user the URL, ask your clarifying questions** (see Workflow order above)
 
 ```bash
 # Verify slides compile (run this to check for errors)
