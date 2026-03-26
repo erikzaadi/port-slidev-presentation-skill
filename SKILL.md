@@ -13,8 +13,8 @@ Create Markdown-based presentations using Slidev with live preview, syntax highl
 
 1. Extract topic, audience, and key points from the user's prompt — make reasonable assumptions
 2. Create `slides.md` immediately (8–12 slides, Port theme, pick images from the list in step 1)
-3. Run the dev server and give the user the localhost URL
-4. **Only after the server is running**, ask clarifying questions:
+3. Run a one-shot compile check, then give the user the command to start the dev server themselves
+4. **Only after giving the user the command**, ask clarifying questions:
    - Who is the audience?
    - Are there specific points or data you want emphasized?
    - Any sections to add, remove, or reorder?
@@ -29,37 +29,50 @@ Questions are more productive when the user is looking at a live draft — feedb
 
 ## Bootstrap (first time only)
 
-If this skill is being invoked via Port MCP rather than from a local `.claude/skills/` 
-installation, clone it first:
+Before proceeding, check whether the skill is already installed:
+
 ```bash
-git clone https://github.com/port-labs/port-slidev-presentation-skill.git \
-  .claude/skills/slidev-presentation
+ls ~/.claude/skills/slidev-presentation
 ```
 
-Then re-read this file from the local path before proceeding.
+If the directory does not exist, clone it:
+```bash
+git clone https://github.com/port-labs/port-slidev-presentation-skill.git \
+  ~/.claude/skills/slidev-presentation
+```
+
+**In either case**, re-read the skill from the local copy before continuing:
+
+```
+~/.claude/skills/slidev-presentation/SKILL.md
+```
+
+The skill lives at `~/.claude/skills/slidev-presentation` — never look for it relative to the project directory.
 
 ## Process
 
 ### 1. Set up the presentation with Port theme
 
-Create the presentation folder, set up the theme, and symlink the image library:
+Create the presentation folder and symlink the themes and public directories from the skill:
 
 ```bash
-mkdir -p outputs/presentations/[name]/public/images
+mkdir -p [name]
 
-# Symlink all theme images into the presentation's public folder
-ln -s "$(pwd)/.claude/skills/slidev-presentation/themes/port/public/images/"* \
-  outputs/presentations/[name]/public/images/
+# Symlink the entire themes dir and the pre-built public dir (images already symlinked inside)
+ln -s ~/.claude/skills/slidev-presentation/themes [name]/themes
+ln -s ~/.claude/skills/slidev-presentation/templates/public [name]/public
 ```
 
-Create `slides.md` with this frontmatter (adjust the relative path based on location):
+Create `slides.md` with this frontmatter:
 
 ```yaml
 ---
-theme: ../../../.claude/skills/slidev-presentation/themes/port
+theme: ./themes/port
 title: Presentation Title
 ---
 ```
+
+This mirrors the convention used in the skill's own template (`port-template.md`). The `public/` symlink gives access to all theme images without any glob expansion.
 
 The Port theme provides:
 - Pre-styled layouts (cover, section, default)
@@ -69,7 +82,7 @@ The Port theme provides:
 
 **See:** [themes/port/README.md](themes/port/README.md) for full component documentation.
 
-**Available images:** All images are in `themes/port/public/images/` with descriptive kebab-case names. Reference them in slides as `<Image src="/images/[name]" />`. Key images:
+**Available images:** All images are in `public/images/` (symlinked from the skill's templates). Reference them in slides as `<Image src="/images/[name]" />`. Key images:
 - `hero-3d-isometric-platform-blocks.jpg` — 3D Port hero, use on cover slides
 - `cicd-pipeline-self-healing-status.png` — CI/CD pipeline with AI self-healing
 - `tasks-assignment-human-vs-ai-donut.png` — Human vs AI task split donut chart
@@ -273,20 +286,25 @@ Only visible in presenter mode.
 
 ### 7. Preview and export
 
-After creating `slides.md`, **always launch the dev server immediately** — don't wait for the user to ask.
+After creating `slides.md`:
 
-1. **Verify the slides compile** by running Slidev once to check for errors
-2. **Provide the terminal command** for the user to run themselves (don't run it in background)
-3. **Always use a random port** (e.g., 3031-3099) since port 3030 is often occupied when working with multiple presentations
-4. **Once you've given the user the URL, ask your clarifying questions** (see Workflow order above)
+1. **Run a one-shot compile check** — this exits automatically, it is not a dev server. Must be run from inside the presentation folder:
 
 ```bash
-# Verify slides compile (run this to check for errors)
-cd outputs/presentations/[name] && npx @slidev/cli slides.md --port [random-port] --open false
-
-# Then provide user with command to run:
-cd outputs/presentations/[name] && npx @slidev/cli slides.md --port [random-port]
+cd [name] && npx @slidev/cli build --skip-download 2>&1 | head -30
 ```
+
+If it exits without errors, the slides are valid.
+
+2. **Give the user the command to start the dev server themselves** — do not run it in the background, do not start it as a long-running process:
+
+```bash
+cd [name] && npx @slidev/cli slides.md --port [random-port]
+```
+
+**Always use a random port** (e.g., 3031-3099) since 3030 is often occupied.
+
+3. **Once you've given the user the command, ask your clarifying questions** (see Workflow order above)
 
 The dev server provides:
 - **Slides**: http://localhost:[port]/
@@ -313,17 +331,17 @@ See [references/export-guide.md](references/export-guide.md) for complete export
 Each presentation folder contains:
 
 ```
-outputs/presentations/[name]/
+[name]/
 ├── slides.md          # Main presentation file
 ├── [name].pdf         # Exported PDF
-├── public/            # Images and assets
-│   └── images/
-│       ├── → (symlinks to themes/port/public/images/*)
-│       └── custom-screenshot.png   # Presentation-specific images
+├── themes -> ~/.claude/skills/slidev-presentation/themes  # All themes
+├── public -> ~/.claude/skills/slidev-presentation/templates/public  # Images
 └── components/        # Custom Vue components (optional)
 ```
 
-Images in `themes/port/public/images/` are available to all presentations via symlinks. Only add presentation-specific images directly to `public/images/`.
+The presentation folder is created directly in the project root (or wherever the user specifies) — not nested under `outputs/` or any other subdirectory unless explicitly requested.
+
+`public/` is symlinked from the skill's templates folder, which already contains all theme images. Only add presentation-specific images by replacing the symlink with a real folder and copying content across.
 
 ## Multi-slide editing
 
